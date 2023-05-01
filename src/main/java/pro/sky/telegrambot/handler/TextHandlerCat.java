@@ -1,17 +1,15 @@
 package pro.sky.telegrambot.handler;
 
-import pro.sky.telegrambot.entity.ContactDetails;
-import pro.sky.telegrambot.entity.Owner;
-import pro.sky.telegrambot.entity.Report;
-import pro.sky.telegrambot.enums.ProbationaryStatus;
-import pro.sky.telegrambot.menu.InlineKeyboard;
-import pro.sky.telegrambot.service.ContactDetailsService;
-import pro.sky.telegrambot.service.OwnerService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import pro.sky.telegrambot.service.ReportService;
+import pro.sky.telegrambot.entity.ContactDetails;
+import pro.sky.telegrambot.entity.Report;
+import pro.sky.telegrambot.entity.ReportCat;
+import pro.sky.telegrambot.enums.ProbationaryStatus;
+import pro.sky.telegrambot.menu.InlineKeyboard;
+import pro.sky.telegrambot.service.*;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -19,27 +17,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * "Перехватчик" updates типа Text
+ * "Перехватчик" updates типа Image
+ * Сохраняет фото в БД
  */
-
-public class TextHandler implements Handler {
+public class TextHandlerCat implements Handler{
     private final TelegramBot telegramBot;
-    private final OwnerService ownerService;
+    private final OwnerCatService ownerCatService;
 
     private final ContactDetailsService contactDetailsService;
 
-    private final ReportService reportService;
+    private final ReportCatService reportCatService;
 
     private final Pattern pattern = Pattern.compile("\\d{11} [А-я]+");
 
-    public TextHandler(TelegramBot telegramBot,
-                       ContactDetailsService contactDetailsService,
-                       OwnerService ownerService,
-                       ReportService reportService) {
+    public TextHandlerCat(TelegramBot telegramBot, OwnerCatService ownerCatService, ContactDetailsService contactDetailsService, ReportCatService reportCatService) {
         this.telegramBot = telegramBot;
+        this.ownerCatService = ownerCatService;
         this.contactDetailsService = contactDetailsService;
-        this.ownerService = ownerService;
-        this.reportService = reportService;
+        this.reportCatService = reportCatService;
     }
 
     @Override
@@ -54,9 +49,9 @@ public class TextHandler implements Handler {
         InlineKeyboard inlineKeyboard = new InlineKeyboard(telegramBot);
 
         if ("/start".equals(text)) {
-            inlineKeyboard.showStartMenu(chatId);
+            inlineKeyboard.showShelterType(chatId);
         } else if ("/saveOwner".equals(text)) {
-            ownerService.saveNewDogOwner(chatId,
+            ownerCatService.saveNewCatOwner(chatId,
                     name,
                     dateOfStartProbation,
                     dateOfEndProbation,
@@ -70,12 +65,12 @@ public class TextHandler implements Handler {
         } else {
             String stringReport = text;
             LocalDateTime dateOfLastRepost = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-            Report report = reportService.findReportByChatId(chatId);
+            ReportCat reportCat = reportCatService.findReportCatByChatId(chatId);
 
             if (text.length() > 30) {
-                reportService.saveNewStringReport(chatId, stringReport, dateOfLastRepost);
-                sendMessage(chatId,"Вы успешно загрузили тесктовый отчет");
-                if (report.getPhotoId() == null) {
+                reportCatService.saveNewStringReportCat(chatId, stringReport, dateOfLastRepost);
+                sendMessage(chatId,"Вы успешно загрузили текстовый отчет");
+                if (reportCat.getPhotoId() == null) {
                     sendMessage(chatId, "Пожалуйста не забудьте предоставить фото отчет");
                 }
             } else {
@@ -99,4 +94,6 @@ public class TextHandler implements Handler {
         SendMessage sendMessage = new SendMessage(chatId, message);
         telegramBot.execute(sendMessage);
     }
+
+
 }
