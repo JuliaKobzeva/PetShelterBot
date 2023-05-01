@@ -32,6 +32,14 @@ public class CallBackQueryHandler implements Handler {
         String data = callbackQuery.data();
         InlineKeyboard infoKeyboard = new InlineKeyboard(telegramBot);
         switch (data) {
+            case buttonDog: {
+                infoKeyboard.showStartMenu(chatId);
+                break;
+            }
+            case buttonCat: {
+                infoKeyboard.showStartMenuCats(chatId);
+                break;
+            }
             case buttonMainMenu1: {
                 infoKeyboard.showInfoShelterMenu(chatId);
                 break;
@@ -46,6 +54,14 @@ public class CallBackQueryHandler implements Handler {
             }
             case buttonCallVolunteer: {
                 infoKeyboard.showVolunteerMenu(chatId);
+                break;
+            }
+            case buttonMainMenuCat1: {
+                infoKeyboard.showInfoShelterCatMenu(chatId);
+                break;
+            }
+            case buttonMainMenuCat2: {
+                infoKeyboard.showBureaucraticMenuCat(chatId);
                 break;
             }
             case buttonShelter1: {
@@ -65,7 +81,15 @@ public class CallBackQueryHandler implements Handler {
                 break;
             }
             case buttonMainMenu: {
-                infoKeyboard.showStartMenu(chatId);
+                infoKeyboard.showShelterType(chatId);
+                break;
+            }
+            case buttonShelterCat1: {
+                showInfoAboutShelterCat(chatId);
+                break;
+            }
+            case buttonShelterCat2: {
+                showContactInfoAboutShelterCat(chatId);
                 break;
             }
             case buttonBureaucraticMenu1: {
@@ -100,6 +124,26 @@ public class CallBackQueryHandler implements Handler {
                 showReasonsForRefusingToAdoptDog(chatId);
                 break;
             }
+            case  buttonBureaucraticMenuCat1: {
+                showCatDatingRules(chatId);
+                break;
+            }
+            case buttonBureaucraticMenuCat3: {
+                showTransportationAdvicesCat(chatId);
+                break;
+            }
+            case buttonBureaucraticMenuCat4: {
+                showHomeImprovementTipsForSmallCat(chatId);
+                break;
+            }
+            case buttonBureaucraticMenuCat5: {
+                showHomeImprovementTipsForCat(chatId);
+                break;
+            }
+            case buttonBureaucraticMenuCat6: {
+                showHomeImprovementTipsForCatWithDisability(chatId);
+                break;
+            }
             case buttonReportMenu1: {
                 showDailyReportForm(chatId);
                 break;
@@ -116,16 +160,26 @@ public class CallBackQueryHandler implements Handler {
         telegramBot.execute(sendMessage);
     }
 
-    //вызов кнопку - показать информацию о приюте
+    //вызов кнопку - показать информацию о приюте собак
     private void showInfoAboutShelter(Long chatId) {
         sendTextMessage(chatId, "Приют Help-Pets это место содержания бездомных, потерянных, брошенных и больных" +
-                " животных. Тут находятся питомцы, от которых отказались хозяева, найденные на улице раненые кошки" +
-                " и собаки. Основаные функции приюта это:" +
+                " животных. Тут находятся питомцы, от которых отказались хозяева, найденные на улице раненые собаки. Основаные функции приюта это:" +
                 "\n- принимать животных от владельцев или найденных на улице;" +
                 "\n- создать хорошие условия для проживания;" +
                 "\n- проводить работу по поиску новых хозяев;" +
                 "\n- временно принять животных, сданных владельцами;" +
-                "\n- приютить больных или травмированных кошек и собак.");
+                "\n- приютить больных или травмированных собак.");
+    }
+
+    //вызов кнопку - показать информацию о приюте кошек
+    private void showInfoAboutShelterCat(Long chatId) {
+        sendTextMessage(chatId, "Приют Help-Cats это место содержания бездомных, потерянных, брошенных и больных" +
+                " животных. Тут находятся питомцы, от которых отказались хозяева, найденные на улице раненые кошки. Основаные функции приюта это:" +
+                "\n- принимать животных от владельцев или найденных на улице;" +
+                "\n- создать хорошие условия для проживания;" +
+                "\n- проводить работу по поиску новых хозяев;" +
+                "\n- временно принять животных, сданных владельцами;" +
+                "\n- приютить больных или травмированных кошек.");
     }
 
     /*по запросу пользователя метод вытаскивает картинку из папки resources и отправляет пользователю*/
@@ -140,6 +194,12 @@ public class CallBackQueryHandler implements Handler {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /*контактные данные приюта кошек*/
+    private void showContactInfoAboutShelterCat(Long chatId) {
+        sendTextMessage(chatId, "Часы работы приюта Help Cats с 9:00 до 19:00 без выходных," +
+                " приют расположен по адресу: Московский проезд д.5");
     }
 
     //Вызов кнопки о правилах безопасности на территории приюта
@@ -167,7 +227,21 @@ public class CallBackQueryHandler implements Handler {
                 "общение, то можете предложить ей поглаживание.");
     }
 
-    // Вызов кнопки "Правила первозки животного"
+    // Вызов кнопки "Правила знакомства с котом"
+    private void showCatDatingRules(Long chatId) {
+        sendTextMessage(chatId, "Если вы выбрали кошку, не забирайте её в первый же день. " +
+                "Сначала спросите у сотрудников о привычках и предпочтениях животного.\n" +
+                "\n" +
+                "Запаситесь тем же кормом, которым кормят в приюте. Пусть он не того качества, " +
+                "который бы хотелось, но если перевести кота сразу на другой корм по приезду в ваш дом, " +
+                "то это спровоцирует у него стресс.\n" +
+                "В первый день вы можете угостить кота лакомством и поговорить с ним.\n" +
+                "Во второй день, когда дома будет готово кошачье приданое, нужно снова подойти к " +
+                "клетке с кошкой. Понаблюдайте для интереса, приблизится ли кошка к вам.");
+    }
+
+
+    // Вызов кнопки "Правила первозки собаки"
     private void showTransportationAdvices(Long chatId) {
         sendTextMessage(chatId, "\"1. Согласно пункту 23.3 ПДД РФ, собака или другой крупный питомец " +
                 " приравнивается к грузу. Перед началом поездки водителю необходимо разместить и закрепить животное." +
@@ -183,12 +257,20 @@ public class CallBackQueryHandler implements Handler {
                 " воспользоваться.");
     }
 
+    // Вызов кнопки "Правила перевозки кота"
+    private void showTransportationAdvicesCat(Long chatId) {
+        sendTextMessage(chatId, " Когда забираете котенка из приюта или с передержки, " +
+                "помните о том, что это очередной сильный стресс для животного. " +
+                "Сначала пообщайтесь со своим новым любимцем, дождитесь, пока он успокоится и " +
+                "только потом аккуратно поместите его в переноску.");
+    }
+
     // Вызов кнопки "Список документов для <<усыновления>>"
     public void showListOfDocuments(Long chatId) {
         sendTextMessage(chatId, " String docs = \"Для усыновления вам понадобится:\n" +
                 "- Паспорт, или другой документ удостоверяющий личность.\n" +
                 "- Также необходимо внести пожертвование (на содержание остальных животных центра. " +
-                "Сумма пожертвования зависит от разных факторов (времени пребывания собаки в центре," +
+                "Сумма пожертвования зависит от разных факторов (времени пребывания питомца в центре," +
                 " затрат на ее лечение и т.п.)");
     }
 
@@ -213,12 +295,49 @@ public class CallBackQueryHandler implements Handler {
                 " так они массируют десна и очищают зубы от налета, делая их крепче и здоровее. Также позаботьтесь " +
                 " об одежде для своих питомцев.");
     }
+    // Вызов кнопки "Обустройство дома для кота"
+    public void showHomeImprovementTipsForCat(Long chatId) {
+        sendTextMessage(chatId, "Чтобы избежать непредвиденных неприятностей, следует обеспечить новому " +
+                "жителю вашего дома максимально безопасные условия.\n" +
+                "1. Подготовка жилья. Коту нужен специальный домик или игровой комплекс, миски для " +
+                "еды и воды, игрушки, лоток.\n" +
+                "2. Сетки на окнах. Важнейший элемент обустройства помещения, в котором будет проживать " +
+                "пушистик. Обычные антимоскитные сетки не выдерживают повисшего на них кота и его когтей. " +
+                "Существуют специальные сетки «антикошка», которые уберегут животное от падения или " +
+                "застревания между окном и рамой (что может привести к гибели животного).");
+    }
+
+    // Вызов кнопки "Обустройство дома для  котенка"
+    public void showHomeImprovementTipsForSmallCat(Long chatId) {
+        sendTextMessage(chatId, "Во-первых, пройдите по всем комнатам и выявите потенциально " +
+                "опасные места для кошек. Это могут быть окна без москитных сеток, " +
+                "разбросанные на полу провода, в которых кошка может просто запутаться и т.д.\n" +
+                "Во-вторых, приобретите в зоомагазине:\n" +
+                "переноску (она вам пригодится не только при переезде кошки из приюта домой, " +
+                "но и при транспортировке к ветеринару на очередной осмотр и вакцинацию);\n" +
+                "две миски (для корма и для воды);\n" +
+                "корм (при выборе готовых кормов остерегайтесь подделок, а если вы решили кормить " +
+                "питомца «натуралкой», заранее составьте меню, приобретите крупы, субпродукты, овощи);\n" +
+                "лоток и наполнитель (при их выборе лотка учитывайте размер и возраст животного);\n" +
+                "когтеточку.\n" +
+                "Не спешите покупать игровые комплексы, домики и прочие дорогостоящие атрибуты. " +
+                "Они нужны и полезны, ваш питомец за них только спасибо скажет, но это, возможно, " +
+                "будет нескоро. Кроме того, далеко не все кошки любят спать в домиках, а потому " +
+                "первое время можно обойтись недорогой лежанкой или же вовсе сшить ее самостоятельно.");
+    }
 
     // Вызов кнопки "Обустройство дома для собаки-инвалида"
     public void showHomeImprovementTipsForDogWithDisability(Long chatId) {
         sendTextMessage(chatId, "Общие рекомендации по обустройству жилья описаны в пункте <<Обустройство дома " +
                 " для собак>>.Более конкретные рекомендации связанные с спецификой заболевания животного вам будут " +
                 " даны от кинолога и ветеринара в момент процедуры <<усыновления>> питомца.");
+    }
+
+    // Вызов кнопки "Обустройство дома для кота-инвалида"
+    public void showHomeImprovementTipsForCatWithDisability(Long chatId) {
+        sendTextMessage(chatId, "Общие рекомендации по обустройству жилья описаны в пункте <<Обустройство дома " +
+                " для кошек>>.Более конкретные рекомендации связанные с спецификой заболевания животного вам будут " +
+                " даны от ветеринара и зоопсихолога в момент процедуры <<усыновления>> питомца.");
     }
 
     // Вызов кнопки "Советы кинолога"
@@ -243,7 +362,7 @@ public class CallBackQueryHandler implements Handler {
                 " обратиться к нашим кинологам: \n+79326762123 Весенников Алексей \n+79358945472 Старкина Алена");
     }
 
-    //Вызов кнопки "Причина отказа в <<усыновлении>>"
+    //Вызов кнопки "Причина отказа в <<усыновлении>> собаки/кота"
     public void showReasonsForRefusingToAdoptDog(Long chatId) {
         sendTextMessage(chatId, "Взять питомца из приюта не так уж легко." +
                 " Работники и волонтеры стараются сделать все, чтобы собаки не оказались на улице повторно," +
