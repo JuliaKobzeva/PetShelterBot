@@ -27,6 +27,31 @@ public class ReportCat {
     @JoinColumn(name = "ownerCat_id")
     private OwnerCat ownerCat;
 
+    public ReportCat(Long chatId, String photoId, LocalDateTime dateOfLastReport, String stringReport, OwnerCat ownerCat) {
+        this.chatId = chatId;
+        this.photoId = photoId;
+        this.stringReport = stringReport;
+        this.dateOfLastReport = dateOfLastReport;
+        this.ownerCat = ownerCat;
+    }
+
+    public ReportCat(Long chatId, String photoId, LocalDateTime dateOfLastReport, OwnerCat ownerCat) {
+        this.chatId = chatId;
+        this.photoId = photoId;
+        this.dateOfLastReport = dateOfLastReport;
+        this.ownerCat = ownerCat;
+    }
+
+    public ReportCat(Long chatId, String photoId, LocalDateTime dateOfLastReport) {
+        this.chatId = chatId;
+        this.photoId = photoId;
+        this.dateOfLastReport = dateOfLastReport;
+    }
+
+    public ReportCat() {
+
+    }
+
     public Integer getId() {
         return id;
     }

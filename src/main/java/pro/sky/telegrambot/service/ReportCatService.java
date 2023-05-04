@@ -33,7 +33,7 @@ public class ReportCatService {
         reportCat.setPhotoId(photoId);
         reportCat.setDateOfLastReport(dateOfLastReport);
         reportCat.setOwnerCat(ownerCatRepository.getOwnerCatByChatId(chatId));
-        reportCatRepository.save(reportCat);
+        saveReportCat(reportCat);
     }
 
     public void saveNewStringReportCat(Long chatId,
@@ -44,7 +44,7 @@ public class ReportCatService {
         reportCat.setStringReport(stringReport);
         reportCat.setDateOfLastReport(dateOfLastReport);
         reportCat.setOwnerCat(ownerCatRepository.getOwnerCatByChatId(chatId));
-        reportCatRepository.save(reportCat);
+        saveReportCat(reportCat);
     }
 
     /**

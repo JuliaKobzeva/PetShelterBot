@@ -24,6 +24,21 @@ public class Cat {
     @JoinColumn(name = "ownerCat_id")
     private OwnerCat ownerCat;
 
+    public Cat(LocalDate birthday, String name, OwnerCat ownerCat) {
+        this.birthday = birthday;
+        this.name = name;
+        this.ownerCat = ownerCat;
+    }
+
+    public Cat(LocalDate birthday, String name) {
+        this.birthday = birthday;
+        this.name = name;
+    }
+
+    public Cat() {
+
+    }
+
     public Integer getId() {
         return id;
     }

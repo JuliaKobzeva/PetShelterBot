@@ -13,6 +13,16 @@ public class ContactDetails {
     private String name;
     private String phoneNumber;
 
+    public ContactDetails(Long chatId, String phoneNumber, String name) {
+        this.chatId = chatId;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public ContactDetails() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -50,12 +60,12 @@ public class ContactDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactDetails that = (ContactDetails) o;
-        return Objects.equals(id, that.id) && Objects.equals(chatId, that.chatId) && Objects.equals(name, that.name) && Objects.equals(phoneNumber, that.phoneNumber);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, chatId, name, phoneNumber);
+        return Objects.hash(id);
     }
 
     @Override

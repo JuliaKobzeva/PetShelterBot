@@ -39,6 +39,25 @@ public class OwnerCat {
     @Column(name = "period_extend")
     private int periodExtend;
 
+    public OwnerCat(Long chatId, String name) {
+        this.chatId = chatId;
+        this.name = name;
+    }
+
+    public OwnerCat(Long chatId, String name, Collection<Cat> cats, Collection<ReportCat> reports, LocalDateTime dateOfStartProbation, LocalDateTime dateOfEndProbation, ProbationaryStatus probationaryStatus, int periodExtend) {
+        this.chatId = chatId;
+        this.name = name;
+        this.cats = cats;
+        this.reports = reports;
+        this.dateOfStartProbation = dateOfStartProbation;
+        this.dateOfEndProbation = dateOfEndProbation;
+        this.probationaryStatus = probationaryStatus;
+        this.periodExtend = periodExtend;
+    }
+
+    public OwnerCat() {
+    }
+
     public Integer getId() {
         return id;
     }
