@@ -54,7 +54,7 @@ public class TextHandler implements Handler {
         InlineKeyboard inlineKeyboard = new InlineKeyboard(telegramBot);
 
         if ("/start".equals(text)) {
-            inlineKeyboard.showStartMenu(chatId);
+            inlineKeyboard.showShelterType(chatId);
         } else if ("/saveOwner".equals(text)) {
             ownerService.saveNewDogOwner(chatId,
                     name,
