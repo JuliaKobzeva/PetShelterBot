@@ -2,6 +2,7 @@ package pro.sky.telegrambot.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reports")
@@ -25,6 +26,24 @@ public class Report {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
+
+    public Report(Long chatId, String photoId, String stringReport, LocalDateTime dateOfLastReport, Owner owner) {
+        this.chatId = chatId;
+        this.photoId = photoId;
+        this.stringReport = stringReport;
+        this.dateOfLastReport = dateOfLastReport;
+        this.owner = owner;
+    }
+
+    public Report(Long chatId, String photoId, String stringReport, LocalDateTime dateOfLastReport) {
+        this.chatId = chatId;
+        this.photoId = photoId;
+        this.stringReport = stringReport;
+        this.dateOfLastReport = dateOfLastReport;
+    }
+
+    public Report() {
+    }
 
     public Long getChatId() {
         return chatId;
@@ -64,5 +83,30 @@ public class Report {
 
     public void setOwner(Owner owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Report report = (Report) o;
+        return Objects.equals(id, report.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "id=" + id +
+                ", chatId=" + chatId +
+                ", photoId='" + photoId + '\'' +
+                ", stringReport='" + stringReport + '\'' +
+                ", dateOfLastReport=" + dateOfLastReport +
+                ", owner=" + owner +
+                '}';
     }
 }

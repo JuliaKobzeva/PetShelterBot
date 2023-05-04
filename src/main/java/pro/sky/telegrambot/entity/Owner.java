@@ -39,6 +39,26 @@ public class Owner {
     @Column(name = "period_extend")
     private int periodExtend;
 
+    public Owner(Long chatId, String name) {
+        this.chatId = chatId;
+        this.name = name;
+    }
+
+    public Owner(Long chatId, String name, Collection<Dog> dogs, Collection<Report> reports, LocalDateTime dateOfStartProbation, LocalDateTime dateOfEndProbation, ProbationaryStatus probationaryStatus, int periodExtend) {
+        this.chatId = chatId;
+        this.name = name;
+        this.dogs = dogs;
+        this.reports = reports;
+        this.dateOfStartProbation = dateOfStartProbation;
+        this.dateOfEndProbation = dateOfEndProbation;
+        this.probationaryStatus = probationaryStatus;
+        this.periodExtend = periodExtend;
+    }
+
+    public Owner() {
+
+    }
+
     public int getPeriodExtend() {
         return periodExtend;
     }
@@ -94,5 +114,33 @@ public class Owner {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Owner owner = (Owner) o;
+        return Objects.equals(id, owner.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Owner{" +
+                "id=" + id +
+                ", chatId=" + chatId +
+                ", name='" + name + '\'' +
+                ", dogs=" + dogs +
+                ", reports=" + reports +
+                ", dateOfStartProbation=" + dateOfStartProbation +
+                ", dateOfEndProbation=" + dateOfEndProbation +
+                ", probationaryStatus=" + probationaryStatus +
+                ", periodExtend=" + periodExtend +
+                '}';
     }
 }
