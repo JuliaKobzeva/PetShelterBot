@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "ownersCat")
 public class OwnerCat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
